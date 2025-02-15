@@ -1,0 +1,35 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+driver = webdriver.Chrome('/path/to/chromedriver')
+
+def create_advertisement():
+    driver.get("http://tech-avito-intern.jumpingcrab.com/create-advertisement")
+
+    title_input = WebDriverWait(driver,10).until(
+        EC.presence_of_element_located((By.NAME,"title"))
+    )
+    title_input.send_keys("Test Advertisement")
+    
+    description_input = driver.find_element(By.NAME,"description")
+    description_input.send_keys("This is a test advertisement.")
+    
+    category_select = driver.find_element(By.NAME,"category")
+    category_select.click()
+    
+    publish_button = driver.find_element(By.XPATH,"//button[@type='submit']")
+    publish_button.click()
+
+def edit_advertisement():
+    driver.get("http://tech-avito-intern.jumpingcrab.com/edit-advertisement/{ad_id}")
+    
+    new_title_input = WebDriverWait(driver,10).until(
+        EC.presence_of_element_located((By.NAME,"title"))
+        )
+         
+create_advertisement()
+edit_advertisement()
+
+driver.quit()
